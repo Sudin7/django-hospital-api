@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    {%if not user.is_authenticated %}
+    <a href ="{% url "login" %}"style=" ; margin-right:200px;">Login</a>
+    <a href ="{% url "register" %}"style=" ; margin-right:200px;">Register</a>
+    {% else %}
+    You have logged in as:{{user}}
+    
+    <form action="{%url "logout" %}" method="POST">
+        {% csrf_token %}
+     <button type="submit">Logout</button>
+    </form>   
+    {% endif %}
+     <a href ="{%url 'add_patients'%}"style="float: right ; margin-right:200px;">Add Patients</a>
+    <table>
+        <thead>
+            <tr>
+            <td>Patient Name</td>
+            <td>Email</td>
+            <td>phone</td>
+            <td>Gender</td>
+            <td>staff Name</td>
+            <td>Date admitted</td>
+            </tr>
+        </thead>
+            
+         <tbody>
+            {% for p in patients%}
+            <tr>
+            <td>{{p.patient_name}}</td>
+            <td>{{p.email}}</td>
+            <td>{{p.phone}}</td>
+            <td>{{p.gender}}</td>
+            <td>{{p.staff_name}}</td>
+            <td>{{p.date_admitted}}</td>  
+
+                           
+            {% endfor %}
+            </tr> 
+    </table>    
+</body>
+</html>
